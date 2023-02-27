@@ -31,7 +31,7 @@ contract MetaVote {
 
     // @notice
     // Add a tag to an election to allow searching and filtering.
-    // The message sender must be the address that created the election (via createElection).
+    // The message sender must be the address that created the election via createElection().
     function addSearchableTag(bytes32 electionId, string tag) external {
         require(elections[electionId] != address(0x0), "Election doesn't exist.");
         require(msg.sender == elections[electionId], "Sender isn't election creator.");
