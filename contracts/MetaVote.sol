@@ -29,7 +29,11 @@ contract MetaVote {
         emit Vote(msg.sender, value);
     }
 
-    
+    function addSearchableTag(bytes32 electionId, string tag) external {
+        require(elections[electionId] != address(0x0), "Election doesn't exist.");
+        require(msg.sender == elections[electionId], "Sender isn't election creator.");
+        emit TagAdded(electionId, tag);
+    }
 
   }
 
