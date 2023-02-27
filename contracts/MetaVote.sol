@@ -23,5 +23,13 @@ contract MetaVote {
             elections[electionId] = msg.sender;
             emit ElectionCreated(electionId, metadataURI, metadataBlob);
         }
+
+    function vote(bytes32 electionId, bytes32 value) external {
+        require(elections[electionId] != address(0x0), "Election doesn't exist.");
+        emit Vote(msg.sender, value);
+    }
+
+    
+
   }
 
