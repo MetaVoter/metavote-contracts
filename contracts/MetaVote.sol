@@ -20,21 +20,22 @@ contract MetaVote {
         bytes32 electionId,
         string calldata metadataURI,
         bytes calldata metadataBlob
-        ) external {
-            elections[electionId] = msg.sender;
-            emit ElectionCreated(electionId, metadataURI, metadataBlob);
-        }
+    ) external {
+        require(elections[electionId] == address(0x0), "Election already exists.");
+        elections[electionId] = msg.sender;
+        emit ElectionCreated(electionId, metadataURI, metadataBlob);
+    }
 
     function vote(bytes32 electionId, bytes calldata value) external {
-        require(elections[electionId] != address(0x0), "Election doesn't exist.");
+        require(elections[electionId] != address(0x0), "Election does not exist.");
         emit Vote(msg.sender, value, electionId);
     }
 
     /// Add a tag to an election to allow searching and filtering.
     /// `msg.sender` must be the address that created the election via createElection().
     function addSearchableTag(bytes32 electionId, string calldata tag) external {
-        require(elections[electionId] != address(0x0), "Election doesn't exist.");
-        require(msg.sender == elections[electionId], "Sender isn't election creator.");
+        require(elections[electionId] != address(0x0), "Election does not exist.");
+        require(msg.sender == elections[electionId], "Sender is not the election creator.");
         emit TagAdded(electionId, tag);
     }
 
